@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<h1  th:text="'Usuario ' + ${user.name}"></h1>
+<hr/>
+        <ul>
+            <li><b>Nome: </b><span th:text="${user.name}"></span></li>
+            <li><b>Telefone: </b><span th:text="${user.tel}"></span></li>
+            <li><b>Endereço: </b><span th:text="${user.address}"></span></li>
+        </ul>
+
+
+
+
+</body>
+</html>

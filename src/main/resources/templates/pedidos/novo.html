@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>Novo Pedido</title>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $( function() {
+            $( "#form-pedidos" ).tabs();
+        } );
+    </script>
+
+
+    <script>
+        $( function() {
+            $( "#balcao" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+            $( "#balcao li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+        } );
+    </script>
+
+
+    <script>
+        $ (function () {
+            $(".item").click(function(){
+                var id = event.target.id;
+
+                if($(event.target).hasClass("selected")){
+                    // TO DO  no funciona ainda
+                    $("#lista-pedidos").find(id).empty();
+
+                }else{
+                    var item = '<input type="number" name="quantity" min="1" value="1"  />';
+
+                    var line = '<span id="'+ id +'"> '+ event.target.innerHTML + ' - ' + item +  '</span><br/>'
+
+                    $("#lista-pedidos").append(line);
+                    $(event.target).toggleClass("selected");
+                }
+
+            });
+        });
+
+    </script>
+
+    <style>
+        .ui-tabs-vertical { width: 55em; }
+        .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
+        .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+        .ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+        .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; }
+        .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em;}
+    </style>
+
+
+</head>
+<body>
+<h1>Novo pedido</h1>
+
+<div id="form-pedidos">
+    <ul>
+        <li><a href="#telefone">Telefone</a></li>
+        <li><a href="#balcao">Balcao</a></li>
+    </ul>
+
+    <div id="telefone">
+
+        <form role="form" action="#" method="post" th:action="@{/usuarios/cadastrar-usuario}">
+
+            <div class="form-group">
+                <label for="name">Nome</label>
+                <input class="form-control" id="name" type="text" name="name"
+                       placeholder="Digite seu Nome"/>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Endereço</label>
+                <input class="form-control" id="address" type="address" name="address"
+                       placeholder="Endereço"/>
+            </div>
+
+            <div class="form-group">
+                <label for="tel">Telefone</label>
+                <input class="form-control" id="tel" type="tel" name="tel"
+                       placeholder="Telefone"/>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </label>
+            </div>
+
+        </form>
+
+
+
+    </div>
+
+    <div id="balcao">
+
+
+        <ul>
+            <li><a href="#comidas">Comidas</a></li>
+            <li><a href="#bebidas">bebidas</a></li>
+            <li><a href="#sobremesas">sobremesas</a></li>
+        </ul>
+
+        <div id="comidas">
+            <ul th:each="product:  ${products}" th:if="${product.typeOfProduct.getName()} == 'Pizzas'" >
+                <button th:id="${product.id}" th:class="'item ' + ${product.id}" th:text="${product.name} + ' - $' + ${product.value}"></button>
+            </ul>
+
+
+        </div>
+        <div id="bebidas">
+
+            <ul th:each="product:  ${products}" th:if="${product.typeOfProduct.getName()} == 'Bebidas'" >
+                <button  th:class="'item ' + ${product.id}"  th:text="${product.name} + ' - $' + ${product.value}"></button>
+            </ul>
+
+        </div>
+
+        <div id="sobremesas">
+
+                <ul th:each="product:  ${products}" th:if="${product.typeOfProduct.getName()} == 'Sobremesas'" >
+                    <button  th:class="'item ' + ${product.id}" th:text="${product.name} + ' - $' + ${product.value}"></button>
+                </ul>
+
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<div id="item-list">
+    Aqui a lista dos pedidos
+    <form th:action="@{/pedidos/new}" action="#" method="post" th:object="${pedido}">
+
+        <input id="origem" type="address" name="origem" hidden="true" value="balcao"/>
+        <input id="user-id" type="text" name="user-id" hidden="true" value="1"/>
+
+        <div id="lista-pedidos"></div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</div>
+
+
+</body>
+</html>

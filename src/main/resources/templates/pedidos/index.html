@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>Pedidos</title>
+</head>
+<body>
+<h1>Todos os pedidos</h1>
+
+<table>
+    <tr><td>Id do Pedido </td><td>Cliente </td><td>Onde foi feito</td><td>Desconto de </td></tr>
+    <tr th:each="pedido:  ${pedidos}">
+    <td th:text="${pedido.id}"></td><td th:text="${pedido.cliente}"></td><td th:text="${pedido.origem}"></td><td th:text="${pedido.disconto}"></td>
+    <td><a th:href="'/pedidos/'+${pedido.id}">VER DETALHE</a></td>
+    </tr>
+</table>
+</body>
+</html>

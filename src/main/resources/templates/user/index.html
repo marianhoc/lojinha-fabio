@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Index</title>
+</head>
+<body>
+
+<h1>Usuarios</h1>
+<table>
+<tr><td>Nome</td><td>Telefone</td><td colspan="2">fidelidade</td></tr>
+<tr th:each="user:  ${users}">
+
+<td th:text="${user.name}"></td><td th:text="${user.tel}"></td><td  th:text="${user.fidelidade}"></td>
+    <td><a th:href="'/usuarios/'+${user.id}">VER CONTA</a></td>
+</tr>
+</table>
+</body>
+</html>
